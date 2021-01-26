@@ -30,3 +30,10 @@ io.on('connection', socket => {
         })
     })
 })
+
+const startServer = () => {
+    const {address, port} = server.address()
+    console.info(`Aplicação rodando em ${address}:${port}`)
+}
+
+server.listen(process.env.PORT || 3000, startServer)
