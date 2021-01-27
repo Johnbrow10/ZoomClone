@@ -23,7 +23,7 @@ class Business {
     // aqui a função init anste de tudo pede permisão do usuario e se
     // ele aceita ela roda a função para acessar a camera do navegador
     async _init() {
-        this.currentStream = await this.media.getCamera();
+        this.currentStream = await this.media.getCamera(true);
         console.log('init!!', this.currentStream)
 
         this.addVideoStream('teste01');

@@ -24,6 +24,7 @@ const onload = () => {
     view,
     media,
     room,
+    muted: false,
     socketBuilder
   }
 
