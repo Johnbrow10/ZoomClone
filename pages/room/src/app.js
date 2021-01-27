@@ -18,14 +18,27 @@ const onload = () => {
 
   const socketUrl = 'http://localhost:3000';
   const socketBuilder = new SocketBuilder({ socketUrl });
+
+  // criando o peerConfig para receber onde roda o servidor do peerjs
+  const peerConfig = Object.values({
+    id: undefined,
+    config: {
+      port: 9000,
+      host: 'localhost',
+      path: '/'
+    }
+  })
+  const peerBuilder = new PeerBuilder({ peerConfig });
+
+
   const view = new View()
   const media = new Media();
   const deps = {
     view,
     media,
     room,
-    muted: false,
-    socketBuilder
+    socketBuilder,
+    peerBuilder
   }
 
   Business.initialize(deps);
