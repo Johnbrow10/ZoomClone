@@ -15,6 +15,7 @@ class Business {
         this.currentPeer = {};
 
         this.peers = new Map();
+        this.usersRecording = new Map();
     }
 
     // inicializa o controlador businnes com as dependencias e intanciando elas no app.js
@@ -51,6 +52,14 @@ class Business {
 
     // A funçao captura o id do usuario apra renderizar as telas de videos de todos os usuarios na chamdada
     addVideoStream(userId, stream = this.currentStream) {
+        // Add new recorder a cada usuario que sair da stream comeca uma gravação diferente
+        const recorderInstance = new Recorder(userId, stream)
+        this.usersRecording.set(recorderInstance.filename, recorderInstance);
+
+        if(this.recordingEnabled) {
+            recorderInstance.startRecording()
+        }
+
         const isCurrentId = false;
         this.view.renderVideo({
             userId,
