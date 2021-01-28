@@ -56,7 +56,7 @@ class Business {
         const recorderInstance = new Recorder(userId, stream)
         this.usersRecording.set(recorderInstance.filename, recorderInstance);
 
-        if(this.recordingEnabled) {
+        if (this.recordingEnabled) {
             recorderInstance.startRecording()
         }
 
@@ -146,6 +146,15 @@ class Business {
     onRecordPressed(recordingEnabled) {
         this.recordingEnabled = recordingEnabled
         console.log('pressionou!!', recordingEnabled)
+        // vai passar por cada usuario e sim continuar para iniciar a gravação
+        for (const [key, value] of this.usersRecording) {
+            if (this.recordingEnabled) {
+                value.startRecording()
+                continue;
+            }
+            value.stopRecording()
+        }
     }
+
 
 }
