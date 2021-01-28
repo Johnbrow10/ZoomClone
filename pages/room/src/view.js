@@ -42,11 +42,17 @@ class View {
         const videoGrid = document.getElementById('video-grid');
         videoGrid.append(div);
     }
+
     setParticipantes(count) {
         const myself = 1;
-        const participantes = document.getElementById('participants')
-        participantes.innerHTML = (count + myself)
+        const participantes = document.getElementById('participants');
+        participantes.innerHTML = (count + myself);
 
-    } 
+    }
+
+    removeVideoElement(id) {
+        const element = document.getElementById(id);
+        element.remove()
+    }
 
 }
