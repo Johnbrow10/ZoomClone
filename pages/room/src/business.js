@@ -38,10 +38,12 @@ class Business {
             .setOnConnectionOpened(this.onPeerConnectionOpened())
             .setOnCallReceived(this.onPeerCallReceived())
             .setOnPeerStreamReceived(this.onPeerStreamReceived())
+            .setOnCallError(this.onPeerCallError)
+            .setOnCallClose(this.onPeerCallClose)
             .build()
 
 
-        this.addVideoStream('teste01');
+        this.addVideoStream(this.currentPeer.id);
 
     }
 
@@ -64,9 +66,22 @@ class Business {
 
     }
 
+    // quando o usuario desconectar da reunião
     onUserDisconnected = function () {
         return userId => {
             console.log('user disconnected', userId);
+
+            // se o id do usuario corresponder a reunião 
+            if (this.peers.has(userId)) {
+                // então ele pega o id e depois fecha a conexão
+                this.peers.get(userId).call.close()
+                // entao depois deleta ele da conexao
+                this.peers.delete(userId)
+            }
+            // modifica a quantidades de usuarios na reunião
+            this.view.setParticipantes(this.peers.size)
+            // e assim remove o elemento quando atualiza os participantes a reunião 
+            this.view.removeVideoElement(userId)
         }
     }
 
@@ -100,7 +115,21 @@ class Business {
 
             this.view.setParticipantes(this.peers.size)
         }
+    }
+    // fazendo a remoção da tela quando o usuario desconecta da reunião
+    onPeerCallError = function () {
+        return (call, error) => {
+            console.log('erro ao se conectar', error);
 
+            this.view.removeVideoElement(call.peer)
+        }
+    }
+
+    onPeerCallClose = function () {
+        return (call) => {
+            console.log('Chamada fechada', call);
+
+        }
     }
 
 }
