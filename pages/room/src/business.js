@@ -27,6 +27,8 @@ class Business {
     // ele aceita ela roda a função para acessar a camera do navegador
     async _init() {
 
+        this.view.configureRecordButton(this.onRecordPressed.bind(this))
+
         this.currentStream = await this.media.getCamera();
         this.socket = this.socketBuilder
             .setOnUserConnected(this.onUserConnected())
@@ -130,6 +132,11 @@ class Business {
             console.log('Chamada fechada', call);
 
         }
+    }
+
+    onRecordPressed(recordingEnabled) {
+        this.recordingEnabled = recordingEnabled
+        console.log('pressionou!!', recordingEnabled)
     }
 
 }
