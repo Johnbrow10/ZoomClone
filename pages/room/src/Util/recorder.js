@@ -7,6 +7,7 @@ class Recorder {
 
         this.mediaRecorder = {};
         this.recordedBlobs = [];
+        this.completeRecordings = [];
         this.recordingActive = false;
     }
 
@@ -53,8 +54,23 @@ class Recorder {
 
         this.mediaRecorder.start();
         console.log(`Media record iniciou!!`, this.mediaRecorder);
-        this.recordingActive = true
+        this.recordingActive = true;
 
+    }
 
+    async stopRecording() {
+        if (!this.recordingActive) return;
+        if (this.mediaRecorder.state === "inactive") return;
+
+        console.log("`media Record pausado!!`", this.userName);
+
+        this.mediaRecorder.stop();
+        this.recordingActive = false;
+ 
+        await Util.sleep(200);
+        // da um push para completar o video
+        this.completeRecordings.push([...this.recordedBlobs]);
+        // e depois de completar tudo no blobs zeramos para comecar uma gravação nova
+        this.recordedBlobs = []
     }
 }
