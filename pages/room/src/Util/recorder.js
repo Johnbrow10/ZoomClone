@@ -82,4 +82,20 @@ class Recorder {
         })
     }
 
+    download() {
+        if (!this.completeRecordings.length) return;
+
+        for (const recording of this.completeRecordings) {
+            const blob = new Blob(recording, { type: this.videoType })
+            const url = window.URL.createObjectURL(blob)
+            const a = document.createElement('a')
+            a.style.display = 'none'
+            a.href = url
+            a.download = `${this.filename}.webm`
+            document.body.appendChild(a)
+            a.click()
+        }
+
+    }
+
 }
