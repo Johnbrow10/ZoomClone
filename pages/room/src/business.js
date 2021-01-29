@@ -89,6 +89,9 @@ class Business {
                 // entao depois deleta ele da conexao
                 this.peers.delete(userId)
             }
+
+            // parar a gravaçao do usuario que saiu da reunião
+            this.stopRecording(userId);
             // modifica a quantidades de usuarios na reunião
             this.view.setParticipantes(this.peers.size)
             // e assim remove o elemento quando atualiza os participantes a reunião 
