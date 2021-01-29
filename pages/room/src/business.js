@@ -28,7 +28,9 @@ class Business {
     // ele aceita ela roda a função para acessar a camera do navegador
     async _init() {
 
+        //configurando os botões que vem da view
         this.view.configureRecordButton(this.onRecordPressed.bind(this))
+        this.view.configureLeaveButton(this.onLeavePressed.bind(this))
 
         this.currentStream = await this.media.getCamera();
         this.socket = this.socketBuilder
@@ -163,7 +165,7 @@ class Business {
     // precisamos parar as gravacoes anteriores dele
 
     async stopRecording(userId) {
-        const usersRecordings = this.usersRecordings;
+        const usersRecordings = this.usersRecording;
         for (const [key, value] of usersRecordings) {
             const isContextUser = key.includes(userId);
             if (!isContextUser) continue;
@@ -174,8 +176,21 @@ class Business {
             if (!isRecordingActive) continue;
 
             await rec.stopRecording();
+            this.playRecordings(key)
         }
     }
 
+    playRecordings(userId) {
+        const user = this.usersRecording.get(userId);
+        const videosURLs = user.getAllVideoURLs();
+
+        videosURLs.map(url => {
+            this.view.renderVideo({ url, userId })
+        })
+    }
+
+    onLeavePressed() {
+        console.log("pressionou botao para terminar reunião")
+    }
 
 }
