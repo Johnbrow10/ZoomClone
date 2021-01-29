@@ -191,6 +191,7 @@ class Business {
 
     onLeavePressed() {
         console.log("pressionou botao para terminar reunião")
+        this.usersRecording.forEach((value, key) => value.download())
     }
 
 }
