@@ -66,11 +66,20 @@ class Recorder {
 
         this.mediaRecorder.stop();
         this.recordingActive = false;
- 
+
         await Util.sleep(200);
         // da um push para completar o video
         this.completeRecordings.push([...this.recordedBlobs]);
         // e depois de completar tudo no blobs zeramos para comecar uma gravação nova
         this.recordedBlobs = []
     }
+
+    getAllVideoURLs() {
+        return this.completeRecordings.map(recording => {
+            const superBuffer = new Blob(recording, { type: this.videoType });
+
+            return window.URL.createObjectURL(superBuffer);
+        })
+    }
+
 }
