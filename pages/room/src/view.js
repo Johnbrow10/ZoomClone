@@ -1,6 +1,7 @@
 class View {
     constructor() {
-        this.recorderBtn = document.getElementById("record")
+        this.recorderBtn = document.getElementById("record");
+        this.leaveBtn = document.getElementById("leave");
     }
 
 
@@ -68,8 +69,20 @@ class View {
             this.toggleRecordingButtonColor(isActive)
         };
     }
+    onLeaveClick(command) {
+        return async () => {
+            command();
+
+            await Util.sleep(1000)
+            window.location = "/pages/home"
+        }
+    }
 
     configureRecordButton(command) {
         this.recorderBtn.addEventListener('click', this.onRecordClick(command))
+    }
+
+    configureLeaveButton(command) {
+        this.leaveBtn.addEventListener('click', this.onLeaveClick(command))
     }
 }
