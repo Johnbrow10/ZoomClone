@@ -73,7 +73,7 @@ class View {
         return async () => {
             command();
 
-            await Util.sleep(1000)
+            await Util.sleep(2000)
             window.location = "/pages/home"
         }
     }
