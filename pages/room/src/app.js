@@ -4,15 +4,18 @@ const onload = () => {
   const room = urlParams.get('room');
   console.log('this is the room', room);
 
-  const socketUrl = 'http://localhost:3000';
+  // const socketUrl = 'http://localhost:3000';
+  const socketUrl = 'https://rocky-depths-73143.herokuapp.com';
   const socketBuilder = new SocketBuilder({ socketUrl });
 
   // criando o peerConfig para receber onde roda o servidor do peerjs
   const peerConfig = Object.values({
     id: undefined,
     config: {
-      port: 9000,
-      host: 'localhost',
+      host: 'guarded-dawn-70787.herokuapp.com',
+      secure: true,
+      // port: 9000,
+      // host: 'localhost',
       path: '/'
     }
   })
